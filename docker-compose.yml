@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  frontendserver:
+    build:
+      context: ./server
+      args:
+        - MY_UID=${MY_UID}
+        - MY_GID=${MY_GID}
+        - PORT_FRONT=${PORT_FRONT}
+    env_file:
+      - .env
+    networks:
+      - hackathon_network
+    volumes:
+      - ./server:/home/appuser/devcon
+    # expose:
+    #   - ${PORT_FRONT}
+    ports:
+      - ${PORT_FRONT}:${PORT_FRONT}
+    command: ["/bin/sh", "-c", "npm start"]   
+
+networks:
+  hackathon_network:

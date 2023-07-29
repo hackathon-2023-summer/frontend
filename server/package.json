@@ -1,0 +1,11 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "http-server ./public -p 3000",
+    "dev": "nodemon --exec 'npm start'"
+  },
+  "devDependencies": {
+    "http-server": "^0.12.3"
+  }
+}
