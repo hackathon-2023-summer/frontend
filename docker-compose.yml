@@ -18,7 +18,7 @@ services:
     #   - ${PORT_FRONT}
     ports:
       - ${PORT_FRONT}:${PORT_FRONT}
-    command: ["/bin/sh", "-c", "npm start"]   
+    command: ["/bin/sh", "-c", "npm start"]
 
 networks:
   hackathon_network:
