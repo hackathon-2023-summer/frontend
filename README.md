@@ -1,8 +1,0 @@
-- まだ単純な node.js サーバーです。
-- index.html の<script>で fetch 文の backend の絶対 path と相対 path を切り替える。
-- ./frontend/docker-compose.yml で frontend を立ち上げた場合
-  - nginx のリバースプロキシが存在しないので、frontend の url は http://localhost:3000
-  - ./frontend/public/index.html の window.API_BASE_URL は'http://localhost:80'
-- ./docker-compose.yml で frontend を立ち上げた場合
-  - nginx のリバースプロキシの向こう側なので、frontend の url は http://localhost:80
-  - ./frontend/public/index.html window.API_BASE_URL は'' nginx が付与してくれるので不要。

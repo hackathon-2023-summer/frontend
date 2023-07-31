@@ -10,15 +10,13 @@ services:
         - PORT_FRONT=${PORT_FRONT}
     env_file:
       - .env
+    volumes:
+      - .:/home/appuser/devcon
     networks:
       - hackathon_network
-    volumes:
-      - ./server:/home/appuser/devcon
-    # expose:
-    #   - ${PORT_FRONT}
     ports:
       - ${PORT_FRONT}:${PORT_FRONT}
-    command: ["/bin/sh", "-c", "npm start"]
-
+    command: ["/bin/sh", "-c", "/home/appuser/devcon/build.sh"]
+    
 networks:
   hackathon_network:

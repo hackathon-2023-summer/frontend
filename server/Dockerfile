@@ -11,7 +11,8 @@ EXPOSE $PORT_FRONT
 
 #ルート権限で操作するフォルダ /appを選択
 WORKDIR /app
-RUN npm install -g npm@9.8.0 http-server --save-dev nodemon
+RUN npm install -g npm@9.8.0
+RUN npm install -g json-server
 
 # localhostでid $whoamiを実行しuidとgidの数値を事前に確認し.envファイルに転機すること。
 # localhostのユーザーと同一のuid・gidのユーザーを作成。
