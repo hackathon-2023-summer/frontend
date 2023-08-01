@@ -6,4 +6,4 @@
 - ./docker-compose.yml で frontend を立ち上げた場合
   - nginx のリバースプロキシの向こう側なので、frontend の url は http://localhost:80
   - ./frontend/public/index.html window.API_BASE_URL は'' nginx が付与してくれるので不要。
-- 親子リポジトリのプルリク・マージを確認中
+- 親子リポジトリのプルリク・マージを確認中。
