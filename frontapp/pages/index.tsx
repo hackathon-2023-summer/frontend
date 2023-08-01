@@ -1,9 +1,9 @@
 import { NextPage } from "next/types"
-import APITest from "../components/APITest"
+import Register from "../components/Register"
 
 
 const Home: NextPage = () => {
-  return (<APITest />)
+  return (<Register />)
 }
 
 export default Home
