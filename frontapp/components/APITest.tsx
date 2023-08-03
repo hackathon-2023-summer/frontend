@@ -7,7 +7,7 @@ const APITest: NextPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/${username}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/users/${username}`,
       {
         method: "POST"
       },
