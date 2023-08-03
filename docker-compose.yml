@@ -8,6 +8,7 @@ services:
         - MY_UID=${MY_UID}
         - MY_GID=${MY_GID}
         - PORT_FRONT=${PORT_FRONT}
+        - NAME_FRONT=${NAME_FRONT}
     env_file:
       - .env
     volumes:
