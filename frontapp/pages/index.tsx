@@ -1,9 +1,10 @@
 import { NextPage } from "next/types"
-import Register from "../components/Register"
+import Register from "./Register"
+import Login from "./Login"
 
 
 const Home: NextPage = () => {
-  return (<Register />)
+  return (<Login />)
 }
 
 export default Home
