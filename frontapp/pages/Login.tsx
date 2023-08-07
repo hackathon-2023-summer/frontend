@@ -46,7 +46,6 @@ const LoginPage: React.FC = () => {
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <Link href="/Register"><button>新規登録</button></Link>
       <button onClick={handleLogin}>Login</button>
-      <button onClick={() => router.push(`/Main`)}>Go to Main</button>
       {showError && <div>ログインできませんでした</div>}
     </div>
   );

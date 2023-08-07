@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { NextPage } from "next"
+import { useRouter } from 'next/router'
 
 const Register: NextPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const router = useRouter()
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/user/`, {
@@ -14,7 +17,11 @@ const Register: NextPage = () => {
       body: JSON.stringify({ username, password, email })
     })
     const data = await response.json();
-    setMessage(data.message);
+    if (response.ok) {
+      router.push('/Login')
+    } else {
+      setMessage(data.message);
+    }
   }
   return (
     <form onSubmit={handleSubmit}>
