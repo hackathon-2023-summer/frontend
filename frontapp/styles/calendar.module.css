@@ -1,0 +1,86 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+}
+
+.icon-container {
+    margin-top: 5px;
+}
+
+.centering {
+    text-align: center;
+}
+.tableCentering {
+    margin: 0 5%;
+}
+.year {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.month {
+    display: inline;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.table {
+    border-collapse:separate;
+    border-spacing: 3px;
+    width: 99%;
+}
+
+.tableheader {
+    width: 14.3%;
+    border-radius: 3px;
+    text-align: center;
+    padding: 1px 0;
+    background-color: #e4d4bc;
+    border:solid 1px #af9d85;
+    color: #a08e74;
+    font-size: 13px;
+}
+
+.tablebody {
+    height: 45px;
+    border-radius: 3px;
+    border:solid 1px #af9d85;
+    font-size: 9px;
+    padding: 0;
+    z-index: 0;
+}
+
+.tablebody p{
+    margin: 0;
+}
+.sun {
+    color: rgb(201, 130, 130);
+}
+
+.sat {
+    color: rgb(88, 108, 207);
+}
+
+.currentmonthimage {
+    width: 100%;
+}
+
+.hideimage {
+    width: 100%;
+    filter: grayscale(80%);
+}
+
+.grayout {
+    filter: grayscale(100%);
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 22px;
+}
+
+.buttonBox button {
+    font-size: 9px;
+}
