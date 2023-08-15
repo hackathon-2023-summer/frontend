@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');
+.bodyContainer {
+    height: 100vh;
+    background-image: url('/imgs/background_main.jpg');
+    background-size: cover;
+    padding: 18px 3px 0px 3px;
+}
+
+.backgroundContainer {
+    background-color: rgba(255, 255, 255, 0.5);
+    height: 98%;
+    margin: 0 5px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px 13px;
+    font-family: 'Pinyon Script', cursive;
+    margin-bottom: 7px;
+}
+.header img {
+    height: 25px;
+    margin-top: -2px;
+}
+.header h1 {
+    font-size: 30px;
+    color: rgb(243, 150, 106);
+    line-height: 20px;
+    margin: 0;
+    border-top: solid 1px;
+}
+
+.header h1 span {
+    font-size: 45px;
+    font-weight: lighter;
+}
+
+.gear {
+    display: flex;
+    margin: 0px 8px 6px 0px;
+    align-items: center;
+    color: rgb(135, 123, 119);
+}
+
+.flxrow {
+    display: flex;
+    flex-direction: row;
+}
+

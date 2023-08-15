@@ -9,6 +9,7 @@ else
   cd /home/appuser/devcon/${NAME_FRONT}
   sudo npm install next@12.3.4 react react-dom typescript @types/react
   sudo npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons react-hook-form
+  sudo npm install @fortawesome/fontawesome-svg-core html-react-parser react-dropzone @types/dompurify dotenv
   sudo chown appuser:appgroup -R /home/appuser/devcon
 fi
 

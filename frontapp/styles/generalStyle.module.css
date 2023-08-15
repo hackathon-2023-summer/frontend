@@ -1,0 +1,29 @@
+.flxcol {
+    display: flex;
+    flex-direction: column;
+}
+
+.flxrow {
+    display: flex;
+    flex-direction: row;
+}
+
+.w1p3 {
+    width: calc(100% / 3);
+}
+
+.tAc{
+    text-align: center;
+}
+
+.tAr{
+    text-align: right;
+}
+
+.centering {
+    text-align: center;
+}
+
+.padLR22 {
+    padding: 0 17px;
+}

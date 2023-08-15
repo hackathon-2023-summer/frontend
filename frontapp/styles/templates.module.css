@@ -1,0 +1,5 @@
+.cn_wc {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
