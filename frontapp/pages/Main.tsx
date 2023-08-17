@@ -6,6 +6,7 @@ import Calendar from '../components/Calendar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons'
 import calendarStyle from "../styles/calendar.module.css";
+import { withAuthCheck } from '../components/AuthCheck'
 
 const Main: NextPage = () => {
   // 現在の日付から、現在の年（4桁）と現在の月のインデックス（0-11）を取得する。
@@ -56,24 +57,5 @@ const Main: NextPage = () => {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // ここで認証チェックを行う。例えば、Cookieやセッションを使用してチェックすることができます。
-  const token = context.req.cookies.userToken;
-
-  if (!token) {
-    // ログインしていない場合は、ログインページへリダイレクト
-    return {
-      redirect: {
-        destination: '/Login',
-        permanent: false,
-      },
-    };
-  }
-
-  // ログインしている場合は、ページコンポーネントにプロップを渡す（もしあれば）
-  return {
-    props: {}, // ページコンポーネントに渡すためのプロップ
-  };
-};
-
+export const getServerSideProps = withAuthCheck();
 export default Main;

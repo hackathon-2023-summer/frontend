@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
         username: username,
         password: password
       }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/token`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
