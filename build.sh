@@ -11,7 +11,7 @@ else
   cd /home/appuser/devcon/${NAME_FRONT}
   npm install next@12.3.4 react react-dom typescript @types/react
   npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons react-hook-form
-  npm install @fortawesome/fontawesome-svg-core html-react-parser react-dropzone @types/dompurify dotenv
+  npm install @fortawesome/fontawesome-svg-core html-react-parser react-dropzone @types/dompurify dotenv npm install dayjs
 fi
 chown -R appuser:appgroup /home/appuser/devcon
 npm run dev

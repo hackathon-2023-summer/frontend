@@ -1,81 +1,87 @@
-import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import calendarStyle from "../styles/calendar.module.css";
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
-const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-// カレンダー関数、引数の型付け
-interface CalendarProps {
+interface CalenderProps {
     year: number;
     month: number;
 }
-
-interface RecipeData {
-    id: number;
-    date: string;
-    relation: string;
-    imageUrl: string;
-    recipename: string;
+interface Recipe {
     category: string;
-    overview: string;
+    date: string;
+    id: number;
+    is_favorite: boolean;
+    photo: string;
+    recipename: string;
 }
 
-/*  カレンダー本体
-    main.tsxから渡されたyearとmonthを元に、カレンダーテーブルを生成。
-    year=本年、month=本月
-*/
-const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
-    const firstDayOfThisMonth = new Date(year, month, 1);
-    const lastDayOfThisMonth = new Date(year, month + 1, 0);
-    const lastDayOfPreviousMonth = new Date(year, month, 0);
-    const daysInTHisMonth = lastDayOfThisMonth.getDate();
-    const startDayOfThisWeek = firstDayOfThisMonth.getDay();
-    const lastDateOfPreviousWeek = lastDayOfPreviousMonth.getDate();
-    const firstDateOfPreviousWeek = lastDateOfPreviousWeek - startDayOfThisWeek + 1;
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    // const [filteredData, setFlteredData] = useState<RecipeData[]>([]);
+const Calender: React.FC<CalenderProps> = ({ year, month }) => {
+    const [recipeData, setRecipeData] = useState<Recipe[] | null>(null);
 
-    // useEffect(() => {
-    //     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/recipe`)
-    //         .then(response => response.json())
-    //         .then((filteredData: RecipeData[]) => setFlteredData(filteredData))
-    //         .catch(error => console.error('バックエンドからのデータ取得に失敗:', error));
-    // }, []);
-
-    // カレンダー配列
-    const calendarRows = [];
-    // 一時保存配列：週毎に値を格納する
-    let daysInRow = [];
-
-    for (let i = 0; i < startDayOfThisWeek; i++) {
-        daysInRow.push(firstDateOfPreviousWeek + i);
+    const getCookie = (name: string): string | undefined => {
+        const value = `; ${document.cookie}`;
+        const parts: string[] = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(';').shift();
     }
 
-    // 取得した1月の日付分繰り返す
-    for (let day = 1; day <= daysInTHisMonth; day++) {
-        daysInRow.push(day);
-        // 7日分を格納した後、calendarRows配列にdaysInRowを挿入、配列を初期化
-        if (daysInRow.length === 7) {
-            // カレンダー配列の作成
-            calendarRows.push(daysInRow);
-            daysInRow = [];
+    // 今月の初日
+    const firstDateOfThisMonth = dayjs(new Date(year, month, 1))
+    // 今月の初日の曜日
+    const firstDayOfThisMonth = firstDateOfThisMonth.day();
+    // 今月の初日が日曜日ならそのまま、そうでない場合は先月の最終日曜日をカレンダー初日にする。
+    const startDate = firstDayOfThisMonth === 0
+        ? firstDateOfThisMonth
+        : firstDateOfThisMonth.subtract(firstDayOfThisMonth, 'day');
+
+    // 今月の末日
+    const lastDateOfThisMonth = dayjs(new Date(year, month + 1, 0))
+    // 今月の末日の曜日
+    const lastDayOfThisMonth = lastDateOfThisMonth.day();
+    // 今月の末日が土曜日ならそのまま、そうでない場合は来月の最初土曜日をカレンダー末日にする。
+    const endDate = lastDayOfThisMonth === 6
+        ? lastDateOfThisMonth
+        : lastDateOfThisMonth.add(6 - lastDayOfThisMonth, 'day');
+
+    const totalDays = endDate.diff(startDate, 'day') + 1;
+    const totalWeeks = Math.ceil(totalDays / 7);
+    const calendarWeeks = Math.max(4, Math.min(6, totalWeeks)); // 表示範囲は最低4週、最高6週になる。
+    const calendarDays: string[][] = [];
+    let currentDate = startDate;
+
+    // 表示用に7日*4〜6週の配列calenderDaysに格納
+    for (let week = 0; week < calendarWeeks; week++) {
+        const weekDays: string[] = [];
+        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+            weekDays.push(currentDate.format('YYYY-MM-DD'));
+            currentDate = currentDate.add(1, 'day');
         }
-    }
-    // 配列の中身に入れるものがなくなれば処理を終了する。
-    if (daysInRow.length > 0) {
-        calendarRows.push(daysInRow);
-    }
-    // 不足分を追加
-    for (let i=0; calendarRows[calendarRows.length-1].length < 7 ; i++) {
-        calendarRows[calendarRows.length-1].push(i+1);
+        calendarDays.push(weekDays);
     }
 
-    const imageUrl = '/imgs/26649380_s.jpg';
+    useEffect(() => {
+        const startDateFormatted = startDate.format('YYYY-MM-DD');
+        const endDateFormatted = endDate.format('YYYY-MM-DD');
+        const url = `http://localhost/fast/recipes/?start_date=${startDateFormatted}&end_date=${endDateFormatted}`;
+        const token = getCookie('userToken');
+        const headers = {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${token}`
+        };
+
+        fetch(url, { headers })
+            .then(response => response.json())
+            .then((recipeData) => setRecipeData(recipeData))
+            .catch(error => console.error('バックエンドからのデータ取得に失敗:', error));
+    }, [year, month]);
+
+    console.log(recipeData)
 
     return (
         <div className={calendarStyle.tableCentering}>
             <table className={calendarStyle.table}>
-            <thead>
+                <thead>
                     <tr>
                         {daysOfWeek.map((day) => (
                             <th key={day} className={`${calendarStyle.tableheader} ${day === 'Sun' ? calendarStyle.sun : ''} ${day === 'Sat' ? calendarStyle.sat : ''}`}>{day}</th>
@@ -83,43 +89,33 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {calendarRows.map((row, rowIndex) => (
+                    {calendarDays.map((week, rowIndex) => (
                         <tr key={rowIndex}>
-                            {row.map((day, dayIndex) => (
-                                <td key={dayIndex} className={`${calendarStyle.td}`}>
-                                    <div className={calendarStyle.cell}>
-                                        <p className={`${dayIndex === 0 ? calendarStyle.sun :''}${dayIndex === 6 ? calendarStyle.sat :''}`}>
-                                            {day}
-                                        </p>
-                                        {
-                                            (rowIndex === 0 && day.toString().length === 2) ||
-                                            (rowIndex === calendarRows.length-1 && day.toString().length === 1) ?
-                                                    <
-                                                        img
-                                                        src={imageUrl}
-                                                        alt="Recipe Image"
-                                                        // width="100%"
-                                                        // height="100%"
-                                                        className={calendarStyle.hideimage}
-                                                    /> :
-                                                    <
-                                                        img
-                                                        src={imageUrl}
-                                                        alt="Recipe Image"
-                                                        // width="100%"
-                                                        // height="100%"
-                                                        className={calendarStyle.currentmonthimage}
-                                                    />
-                                        }
-                                    </div>
-                                </td>
-                            ))}
+                            {week.map((dateStr, colIndex) => {
+                                const day = dayjs(dateStr).date(); // 日付部分のみを取得
+                                const recipe = recipeData?.find((recipe) => recipe.date === dateStr);
+                                return (
+                                    <td key={colIndex} className={`${calendarStyle.td}`}>
+                                        <div className={calendarStyle.cell}>
+                                            <p className={`${colIndex === 0 ? calendarStyle.sun : ''}${colIndex === 6 ? calendarStyle.sat : ''}`}>
+                                                {day} {/* 日付の表示 */}
+                                            </p>
+                                            {recipe?.photo && (
+                                                <img
+                                                    src={recipe.photo}
+                                                    alt={recipe.recipename}
+                                                    className={calendarStyle.hideimage}
+                                                />
+                                            )}
+                                        </div>
+                                    </td>
+                                )
+                            })}
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-    );
-};
-
-export default Calendar;
+    )
+}
+export default Calender
