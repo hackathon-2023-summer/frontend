@@ -98,10 +98,6 @@
     filter: grayscale(80%);
 }
 
-.grayout {
-    filter: grayscale(100%);
-}
-
 .listButton {
     font-size: 10px;
     margin-right: 2px;
@@ -247,6 +243,7 @@
 }
 
 .showPreviousBox {
+    left: 0;
     padding-top: 30%;
 }
 

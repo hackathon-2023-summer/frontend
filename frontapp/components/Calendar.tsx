@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import calendarStyle from "../styles/calendar.module.css";
+import Image from 'next/image';
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -7,6 +8,16 @@ const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 interface CalendarProps {
     year: number;
     month: number;
+}
+
+interface RecipeData {
+    id: number;
+    date: string;
+    relation: string;
+    imageUrl: string;
+    recipename: string;
+    category: string;
+    overview: string;
 }
 
 /*  カレンダー本体
@@ -21,6 +32,15 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
     const startDayOfThisWeek = firstDayOfThisMonth.getDay();
     const lastDateOfPreviousWeek = lastDayOfPreviousMonth.getDate();
     const firstDateOfPreviousWeek = lastDateOfPreviousWeek - startDayOfThisWeek + 1;
+
+    // const [filteredData, setFlteredData] = useState<RecipeData[]>([]);
+
+    // useEffect(() => {
+    //     fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/recipe`)
+    //         .then(response => response.json())
+    //         .then((filteredData: RecipeData[]) => setFlteredData(filteredData))
+    //         .catch(error => console.error('バックエンドからのデータ取得に失敗:', error));
+    // }, []);
 
     // カレンダー配列
     const calendarRows = [];
@@ -66,16 +86,11 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
                     {calendarRows.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {row.map((day, dayIndex) => (
-                                <td key={dayIndex} className={calendarStyle.tablebody}>
-                                    <p className=
-                                        {`
-                                            ${dayIndex === 0 ? calendarStyle.sun :''}
-                                            ${dayIndex === 6 ? calendarStyle.sat :''}
-                                        `}
-                                    >
-                                        {day}
-                                    </p>
-                                    <div>
+                                <td key={dayIndex} className={`${calendarStyle.td}`}>
+                                    <div className={calendarStyle.cell}>
+                                        <p className={`${dayIndex === 0 ? calendarStyle.sun :''}${dayIndex === 6 ? calendarStyle.sat :''}`}>
+                                            {day}
+                                        </p>
                                         {
                                             (rowIndex === 0 && day.toString().length === 2) ||
                                             (rowIndex === calendarRows.length-1 && day.toString().length === 1) ?
@@ -83,12 +98,16 @@ const Calendar: React.FC<CalendarProps> = ({ year, month }) => {
                                                         img
                                                         src={imageUrl}
                                                         alt="Recipe Image"
+                                                        // width="100%"
+                                                        // height="100%"
                                                         className={calendarStyle.hideimage}
                                                     /> :
                                                     <
                                                         img
                                                         src={imageUrl}
                                                         alt="Recipe Image"
+                                                        // width="100%"
+                                                        // height="100%"
                                                         className={calendarStyle.currentmonthimage}
                                                     />
                                         }

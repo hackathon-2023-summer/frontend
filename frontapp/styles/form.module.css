@@ -1,0 +1,96 @@
+.mainContainer {
+    padding: 0 20px;
+    color: #45362d;
+}
+
+.mainContainer input {
+    border: solid 0.5px #816c5d;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 1px 8px;
+    margin-bottom: 3px;
+}
+
+.actionName {
+    margin: 0;
+    font-family: "Century Gothic";
+    text-align: center;
+    font-size: 13px;
+}
+
+.formSection {
+    margin-bottom: 20px;
+}
+
+.label {
+    margin-top: 5px;
+    font-size: 13px;
+}
+.recipeName {
+    font-size: 18px;
+    width: 180px;
+}
+.category {
+    width: 90px;
+}
+
+.createDate input{
+    width: 115px;
+    font-size: 12px;
+    color: #45362d;;
+    padding-right: 3px;
+    /* background-color: linear-gradient(90deg,rgba(255, 255, 255, 0.7) 80%, rgba(50, 50, 50, 0.7) 20%); */
+}
+
+.inputField {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+}
+
+.dropzoneContainer {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.stepContainer {
+    margin-bottom: 20px;
+}
+
+.stepInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.submitButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.mainContainer .createDate input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #000;
+    /* color: rgb(82, 74, 71); */
+}

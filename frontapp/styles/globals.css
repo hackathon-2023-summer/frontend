@@ -18,6 +18,13 @@ a {
   box-sizing: border-box;
 }
 
+/* input[type="date"]:before {
+  display: inline-block;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: '\f133'
+} */
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

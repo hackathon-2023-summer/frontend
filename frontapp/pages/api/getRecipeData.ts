@@ -1,21 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 // import cookie from 'cookie';
 
-const apiToken = process.env.NOTION_API_TOKEN;
-const databaseId = process.env.NOTION_RECIPES_ID;
-const apiUrl = `https://api.notion.com/v1/databases/${databaseId}/query`;
+const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // 型宣言はNotionから送られるデータ型に合わせています。
 // 環境に応じて適宜変更してください。
-export interface RecipeData {
-    id: string;
-    date: string;
-    relation: string;
-    imageUrl: string;
-    recipename: string;
-    category: string;
-    overview: string;
-}
+// export interface RecipeData {
+//     id: string;
+//     date: string;
+//     relation: string;
+//     imageUrl: string;
+//     recipename: string;
+//     category: string;
+//     overview: string;
+// }
 
 interface ObjectType {
     object: string;
