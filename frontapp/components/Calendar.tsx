@@ -76,8 +76,6 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
             .catch(error => console.error('バックエンドからのデータ取得に失敗:', error));
     }, [year, month]);
 
-    console.log(recipeData)
-
     return (
         <div className={calendarStyle.tableCentering}>
             <table className={calendarStyle.table}>
