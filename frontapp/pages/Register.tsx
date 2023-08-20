@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NextPage } from "next"
 import { useRouter } from 'next/router'
+import LoginStyle from "../styles/login.module.css";
 
 const Register: NextPage = () => {
   const [username, setUsername] = useState('')
@@ -24,25 +25,31 @@ const Register: NextPage = () => {
     }
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-        placeholder='Username'
-      />
-      <input
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder='Password'
-      />
-      <input
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder='Email'
-      />
-      <button type='submit'>register</button>
-      <div>{message}</div>
-    </form>
+    <div className={LoginStyle.pagelayout}>
+      <h1 id={LoginStyle.title}>ANTOQUINO</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          className={LoginStyle.inputform}
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          placeholder='User name'
+        />
+        <input
+          className={LoginStyle.inputform}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder='Password'
+        />
+        <input
+          className={LoginStyle.inputform}
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          placeholder='Email'
+        />
+        <button className={LoginStyle.btn} type='submit'>Sign Up</button>
+        <div>{message}</div>
+      </form>
+    </div>
   )
 }
 export default Register

@@ -1,0 +1,45 @@
+.centering {
+    text-align: center;
+    padding: 8px 16px;
+}
+
+.recipe_title{
+    text-decoration: underline overline;
+    font-size: 2em;
+    color: orange;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.create_date{
+    text-align: right;
+    color: white;
+}
+
+.photo_layout {
+    margin: auto;
+    height: 16rem;
+    width: auto;
+    border: solid blanchedalmond;
+}
+
+.recipe_summary{
+    text-align: left;
+    width: 100%;
+    height: 6rem;
+    border: none;
+    resize: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.sequence_list{
+    text-align: left;
+}
+
+.sequence_number{
+    text-align: left;
+}
+
+.sequence_description{
+    text-align: left;
+}

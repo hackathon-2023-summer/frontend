@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from "next/link";
+import LoginStyle from "../styles/login.module.css";
+
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -40,12 +42,12 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>ログイン</h1>
-      <input type="text" placeholder="User name" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <Link href="/Register"><button>新規登録</button></Link>
-      <button onClick={handleLogin}>Login</button>
+    <div className={LoginStyle.pagelayout}>
+      <h1 id={LoginStyle.title}>ANTOQUINO</h1>
+      <input className={LoginStyle.inputform} type="text" placeholder="User name" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <input className={LoginStyle.inputform} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <button className={LoginStyle.btn} onClick={handleLogin}>Login</button>
+      <Link href="/Register"><button className= {LoginStyle.btn} >新規登録</button></Link>
       {showError && <div>ログインできませんでした</div>}
     </div>
   );

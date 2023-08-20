@@ -1,0 +1,35 @@
+.pagelayout{
+    background-image: url('/imgs/top.jpg');
+    height: 100vh;
+    background-size: cover;
+    /* padding: 18px 3px 0px 3px; */
+    text-align: center;
+    padding: 8px 16px;
+    display: flex;
+    flex-flow: column;
+}
+
+#title{
+    color: chocolate;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 4rem;
+}
+
+.inputform{
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    padding: 8px 16px;
+    margin: 8px 32px;
+    background-color: antiquewhite;
+    border-radius: 25px;
+
+}
+
+.btn{
+    padding: 8px 16px;
+    margin: 8px 80px;
+    font-size: 1.5rem;
+    background-color: lightgreen;
+    color: coral;
+    border-radius: 25px;
+}
