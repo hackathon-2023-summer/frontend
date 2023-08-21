@@ -63,7 +63,7 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
     useEffect(() => {
         const startDateFormatted = startDate.format('YYYY-MM-DD');
         const endDateFormatted = endDate.format('YYYY-MM-DD');
-        const url = `http://localhost/fast/recipes/?start_date=${startDateFormatted}&end_date=${endDateFormatted}`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/recipes/?start_date=${startDateFormatted}&end_date=${endDateFormatted}`;
         const token = getCookie('userToken');
         const headers = {
             'accept': 'application/json',
