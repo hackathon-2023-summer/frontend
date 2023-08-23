@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useUser } from '../components/UserContext'
 import Link from "next/link";
 import LoginStyle from "../styles/login.module.css";
 
@@ -9,8 +8,6 @@ const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showError, setShowError] = useState(false);
-  const { setUserId } = useUser() // UserContextからsetUserIdを取得
-
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -34,12 +31,6 @@ const LoginPage: React.FC = () => {
         // router.push(`${process.env._API_FRONT_URL}/Main`);
         const tokenData = await response.json();
         document.cookie = `userToken=${tokenData.access_token}; path=/`; // クッキーにトークンを保存
-        // ユーザーIDを取得
-        const userResponse = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/user/`, {
-          headers: { Authorization: `Bearer ${tokenData.access_token}` },
-        });
-        const userData = await userResponse.json();
-        setUserId(userData.id); // UserContextにユーザーIDをセット
         router.push('/Main');
 
       } else {
