@@ -85,7 +85,7 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
 
     if (clickedDateData.length === 0) {
       // レシピが存在しない場合、登録画面へ
-      router.push(`/AddRecipe?date=${date.format('YYYY-MM-DD')}`);
+      router.push(`/Upload?date=${date.format('YYYY-MM-DD')}`);
     } else {
       // レシピが存在する場合、モーダル用に該当jsonをhookに保持
       setCurrentImageIndex(0); // ここで初期値を設定
