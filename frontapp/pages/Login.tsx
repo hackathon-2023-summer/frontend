@@ -47,7 +47,7 @@ const LoginPage: React.FC = () => {
       <input className={LoginStyle.inputform} type="text" placeholder="User name" value={username} onChange={(e) => setUsername(e.target.value)} />
       <input className={LoginStyle.inputform} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button className={LoginStyle.btn} onClick={handleLogin}>Login</button>
-      <Link href="/Register"><button className= {LoginStyle.btn} >新規登録</button></Link>
+      <Link href="/Register"><button className={LoginStyle.btn} >新規登録</button></Link>
       {showError && <div>ログインできませんでした</div>}
     </div>
   );
