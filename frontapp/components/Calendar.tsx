@@ -35,38 +35,6 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
     filteredData.length > 0 ? 0 : undefined
   );
 
-  const getCookie = (name: string): string | undefined => {
-    const value = `; ${document.cookie}`;
-    const parts: string[] = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
-  }
-
-  const handleModalClose = () => {
-    setIsVisible(false);
-  };
-
-  // スライドアクション
-  const handleSlideLeft = () => {
-    if (currentImageIndex === undefined || currentImageIndex <= 0) {
-      return;
-    }
-    const newIndex = currentImageIndex - 1;
-    setCurrentImageIndex(newIndex);
-    const newImage = selectedDetailData[newIndex]?.imageURL;
-    setSelectedImage(newImage);
-  };
-
-  const handleSlideRight = () => {
-    if (currentImageIndex === undefined || currentImageIndex >= selectedDetailData.length - 1) {
-      return;
-    }
-    const newIndex = currentImageIndex + 1;
-    setCurrentImageIndex(newIndex);
-    const newImage = selectedDetailData[newIndex].imageURL;
-    setSelectedImage(newImage);
-  };
-
-
   // 今月の初日
   const firstDateOfThisMonth = dayjs(new Date(year, month, 1))
   // 今月の初日の曜日
@@ -101,6 +69,68 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
     calendarDays.push(weekDays);
   }
 
+  // cookieを取得
+  const getCookie = (name: string): string | undefined => {
+    const value = `; ${document.cookie}`;
+    const parts: string[] = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+  }
+
+  // calendarのセルクリック　イベントハンドラ
+  const handleCellClick = (date: dayjs.Dayjs) => {
+    const clickedDateData = filteredData.filter((item) => {
+      const itemDate = dayjs(item.date);
+      return itemDate.isSame(date, 'day');
+    });
+
+    if (clickedDateData.length === 0) {
+      // レシピが存在しない場合、登録画面へ
+      router.push(`/AddRecipe?date=${date.format('YYYY-MM-DD')}`);
+    } else {
+      // レシピが存在する場合、モーダル用に該当jsonをhookに保持
+      setCurrentImageIndex(0); // ここで初期値を設定
+      setSelectedDetailData(clickedDateData);
+      const clickedImageData = clickedDateData.find(item => item.imageURL);
+      if (clickedImageData) {
+        setSelectedImage(clickedImageData.imageURL);
+        setIsVisible(true);
+        setIsDetailsVisible(true);
+      } else {
+        setSelectedImage(undefined);
+        setIsVisible(false);
+        setIsDetailsVisible(false);
+      }
+    }
+  };
+
+  // モーダルを閉じる
+  const handleModalClose = () => {
+    setIsVisible(false);
+  };
+
+  // スライドアクション 左
+  const handleSlideLeft = () => {
+    if (currentImageIndex === undefined || currentImageIndex <= 0) {
+      return;
+    }
+    const newIndex = currentImageIndex - 1;
+    setCurrentImageIndex(newIndex);
+    const newImage = selectedDetailData[newIndex]?.imageURL;
+    setSelectedImage(newImage);
+  };
+
+  // スライドアクション 右
+  const handleSlideRight = () => {
+    if (currentImageIndex === undefined || currentImageIndex >= selectedDetailData.length - 1) {
+      return;
+    }
+    const newIndex = currentImageIndex + 1;
+    setCurrentImageIndex(newIndex);
+    const newImage = selectedDetailData[newIndex].imageURL;
+    setSelectedImage(newImage);
+  };
+
+  // Mainロード時にyearとmonthからstartDateとendDateを計算し、該当するレシピjsonをAPIで取得、filteredDataに格納
   useEffect(() => {
     const startDateFormatted = startDate.format('YYYY-MM-DD');
     const endDateFormatted = endDate.format('YYYY-MM-DD');
@@ -132,47 +162,18 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
           </tr>
         </thead>
         <tbody>
+          {/* calenderDaysはyearとmonthから7日x4週〜6週で抽出されているので、追加のfilteringは不要。 */}
           {calendarDays.map((week, rowIndex) => (
             <tr key={rowIndex}>
               {week.map((dateStr, colIndex) => {
                 const day = dayjs(dateStr);
                 const displayDay = day.date();
-                const isPrevMonth = day.month() < month;
-                const isNextMonth = day.month() > month;
-                const displayMonth = isPrevMonth ? month - 1 : isNextMonth ? month + 1 : month;
-                const displayYear = isPrevMonth && displayMonth === 11 ? year - 1 : isNextMonth && displayMonth === 0 ? year + 1 : year;
-                const displayDate = dayjs(new Date(displayYear, displayMonth, displayDay));
+                const displayDate = dayjs(new Date(day.year(), day.month(), day.date()));
                 const recipe = filteredData?.find((recipe) => dayjs(recipe.date).isSame(displayDate, 'day'));
                 return (
                   <td key={colIndex} className={`${calendarStyle.td}`}>
-                    <div
-                      className={calendarStyle.cell}
-                      onClick={() => {
-                        const clickedDateData = filteredData.filter((item) => {
-                          const itemDate = dayjs(item.date);
-                          return itemDate.isSame(displayDate, 'day');
-                        });
-                        // console.log(clickedDateData);
-                        if (clickedDateData.length === 0) {
-                          // レシピ登録画面へ
-                          router.push(`/AddRecipe?date=${day.format('YYYY-MM-DD')}`);
-                        } else {
-                          // 初期インデックスの設定
-                          setCurrentImageIndex(0); // ここで初期値を設定
-                          setSelectedDetailData(clickedDateData);
-                          const clickedImageData = clickedDateData.find(item => item.imageURL);
-                          if (clickedImageData) {
-                            setSelectedImage(clickedImageData.imageURL);
-                            setIsVisible(true);
-                            setIsDetailsVisible(true)
-                          } else {
-                            setSelectedImage(undefined);
-                            setIsVisible(false);
-                            setIsDetailsVisible(false)
-                          }
-                        }
-                      }}
-                    >
+                    <div className={calendarStyle.cell} onClick={() => handleCellClick(displayDate)}>
+                      {/* カレンダーのセルに表示するのはdisplayDayとimg */}
                       <p className={`${colIndex === 0 ? calendarStyle.sun : ''}${colIndex === 6 ? calendarStyle.sat : ''}`}>
                         {displayDay}
                       </p>
@@ -188,6 +189,7 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
         </tbody>
       </table>
 
+      {/* 詳細表示部 */}
       {isDetailsVisible && (
         <div className={calendarStyle.detailContainer}>
           {selectedDetailData.map(item => (
@@ -208,6 +210,7 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
         </div>
       )}
 
+      {/* モーダル表示部 */}
       {islVisible && (
         <div className={calendarStyle.imageModal}>
           <FontAwesomeIcon icon={faCircleXmark} onClick={handleModalClose} className={calendarStyle.closeIcon} />
@@ -225,8 +228,6 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
         </div>
       )}
     </div>
-
-
   )
 }
 
