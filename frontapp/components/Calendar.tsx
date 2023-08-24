@@ -147,6 +147,13 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
       .catch(error => console.error('バックエンドからのデータ取得に失敗:', error));
   }, [year, month]);
 
+  // filteredDataの型が配列でなければ、/Loginにリダイレクト
+  if (filteredData && !Array.isArray(filteredData)) {
+    router.push('/Login');
+    return null;  // リダイレクト後のレンダリングを回避するための早期return
+  }
+
+
   return (
     <div className={calendarStyle.tableCentering}>
       <table className={calendarStyle.table}>
