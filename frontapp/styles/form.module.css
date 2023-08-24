@@ -28,13 +28,15 @@
 }
 .recipeName {
     font-size: 18px;
-    width: 180px;
+    width: 43vw;
 }
 .category {
     width: 90px;
 }
 
 .createDate input{
+    position: relative;
+    top: -17px;
     width: 115px;
     font-size: 12px;
     color: #45362d;;
@@ -90,7 +92,74 @@
     display: none;
 }
 
-.mainContainer .createDate input[type="date"]::-webkit-calendar-picker-indicator {
-    color: #000;
-    /* color: rgb(82, 74, 71); */
+/* .createDate {
+    margin-left: 10%;
+} */
+
+.createDate .pickerInput {
+    width: 95px;
 }
+.createDate .calendarPicker {
+    position: relative;
+    top: -18px;
+    left: -17px;
+    font-size: 10px;
+    color: #45362d;
+}
+
+.procedureInnerBox{
+    padding: 5px;
+}
+
+.procedureInnerBox p {
+    font-size: 13px;
+    margin: 0;
+    margin-right: 10px;
+}
+
+.procedureInnerBox input {
+    height: 30px;
+    width: 220px;
+    font-size: 13px;
+    color: #000;
+}
+
+.completeDropZone {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44vw;
+    height: 118px;
+    border: solid 0.5px #000;
+    padding: 10px 16px;
+    font-size: 13px;
+    z-index: 10;
+    margin-top: 18px;
+    color: #d9cec6;
+    background-color: rgba(142, 144, 139, 0.7);
+}
+
+.compImgBox{
+    position: relative;
+    margin-top: 4px;
+    margin-left: 3%;
+}
+
+.completeImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 44vw;
+    height: 118px;
+    z-index: 0;
+    margin-top: 18px;
+}
+
+.completeImageTitle {
+    font-size: 13px;
+    color: #45362d;
+    margin: 0;
+}
+
+
+

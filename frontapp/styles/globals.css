@@ -18,11 +18,8 @@ a {
   box-sizing: border-box;
 }
 
-/* input[type="date"]:before {
-  display: inline-block;
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: '\f133'
+/* input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
 } */
 
 @media (prefers-color-scheme: dark) {
