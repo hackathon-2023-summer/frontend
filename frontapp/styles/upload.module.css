@@ -32,6 +32,20 @@
   font-size: 13px;
 }
 
+.flexContainer {
+  display: flex;
+  align-items: top; /* 子要素を垂直方向の中央に配置 */
+  gap: 50px; /* 子要素の間隔を設定 */
+}
+
+.dragDropArea {
+  border: 3px dashed #726f6f; /* ドロップエリアを目立たせるためのスタイリング */
+  margin: 20px;
+  padding: 40px;
+  min-width: 50px; /* 必要に応じて変更 */
+  cursor: pointer;
+}
+
 .switch {
   position: relative;
   display: inline-block;

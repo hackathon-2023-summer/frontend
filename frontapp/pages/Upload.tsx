@@ -14,6 +14,7 @@ import { faCalendarDays } from '@fortawesome/free-solid-svg-icons'
 import { ImageUploader } from '../components/UploadComponents/ImageUploader';
 
 import { withAuthCheck } from '../components/AuthCheck'
+import React from "react";
 
 //アップロードするレシピのデータ型
 interface FormData {
@@ -45,6 +46,7 @@ const Upload: React.FC = () => {
   const [uploadURL, setUploadURL] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null); (null)
   const [imageType, setImageType] = useState<string | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   // cookieを取得
   const getCookie = (name: string): string | undefined => {
@@ -120,6 +122,38 @@ const Upload: React.FC = () => {
     e.preventDefault();
   };
 
+  const handleFileInputClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith("image")) {
+        // アップロードするファイル名をランダムにする。
+        const randomFileName = generateRandomFileName(file.name);
+        const newFile = new File([file], randomFileName, { type: file.type });
+
+        const previewURL = URL.createObjectURL(newFile);
+        setPreviewImage(previewURL);
+        setImageFile(newFile)
+        setImageType(newFile.type)
+
+        // MIMEタイプをクエリパラメータとして追加
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/get_presigned_url?file_name=${randomFileName}&content_type=${newFile.type}`
+
+        //s3にアップロード・ダウンロードするurlを取得
+        const response = await fetch(url);
+        const { presigned_upload_url, download_url } = await response.json();
+
+        //アップロード・ダウンロードurlを保持
+        setUploadURL(presigned_upload_url)
+        setFormData(prev => ({ ...prev, imageURL: download_url }));
+      } else {
+        console.error("ファイル形式が不正です。画像ファイルを選択して下さい。");
+      }
+    };
+  }
   // プレビュー削除
   const handleDeletePreview = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setPreviewImage("")
@@ -127,7 +161,6 @@ const Upload: React.FC = () => {
     setUploadURL("")
     setFormData(prev => ({ ...prev, imageURL: "" }));
   }
-
 
   // 料理カテゴリ 変更イベント
   const handleSelectChange = (value: string) => {
@@ -195,12 +228,19 @@ const Upload: React.FC = () => {
     <Layout>
       <div className={`${generalStyle.flxcol} ${generalStyle.pdg20} ${formStyles.mainContainer}`}>
         <p className={formStyles.actionName}>- レシピを投稿する -</p>
-        <div>
-          {formData.date ? (
-            <p>投稿対象: {formData.date}</p>
-          ) : (
-            <p>Loading...</p>
-          )}
+        <div className={formStyles.flexContainer}>
+          <div>
+            {formData.date ? (
+              <p>投稿対象: {formData.date}</p>
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+          <div className={formStyles.dragDropArea} onDrop={handleDrop} onDragOver={handleDragOver} onClick={handleFileInputClick}>
+            <p>画像をドロップするか、クリックしてファイルを選択してください。</p>
+            {previewImage && <img src={previewImage} style={{ maxWidth: "100%" }} />}
+            <input type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileInputChange} />
+          </div>
         </div>
         <form onSubmit={handleSubmit}>
           <div>
@@ -237,7 +277,7 @@ const Upload: React.FC = () => {
             </div>
 
             <div className={formStyles.switchContainer}>
-              <label className={formStyles.label}>お気に入り</label>
+              <label className={formStyles.label}>気に入った？</label>
               <label className={formStyles.switch}>
                 <input
                   className={formStyles.input}
@@ -248,12 +288,7 @@ const Upload: React.FC = () => {
                 <span className={`${formStyles.slider} ${formStyles.round}`}></span>
               </label>
             </div>
-            <div >
-              <div onDrop={handleDrop} onDragOver={handleDragOver} >
-                <p>画像をドロップするか、クリックしてファイルを選択してください。</p>
-                {previewImage && <img src={previewImage} style={{ maxWidth: "100%" }} />}
-              </div>
-            </div>
+
 
           </div>
           <button type="button" onClick={handleDeletePreview}>プレビュー削除</button>
