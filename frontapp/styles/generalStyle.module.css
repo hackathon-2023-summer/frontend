@@ -8,6 +8,10 @@
     flex-direction: row;
 }
 
+.spBt {
+    justify-content: space-between;
+}
+
 .w1p3 {
     width: calc(100% / 3);
 }
