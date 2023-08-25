@@ -43,7 +43,10 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={LoginStyle.pagelayout}>
-      <h1 id={LoginStyle.title}>Antoquino</h1>
+      <header className={LoginStyle.header}>
+        <img src="/imgs/antoquino.png" alt="antoquinoロゴ" />
+        <h1><span>a</span>ntoquino</h1>
+      </header>
       <input className={LoginStyle.inputform} type="text" placeholder="User name" value={username} onChange={(e) => setUsername(e.target.value)} />
       <input className={LoginStyle.inputform} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button className={LoginStyle.btn} onClick={handleLogin}>Login</button>

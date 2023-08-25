@@ -1,0 +1,91 @@
+.actionName {
+  margin: 0;
+  font-family: "Century Gothic";
+  text-align: center;
+  font-size: 13px;
+}
+
+.mainContainer {
+  padding: 0 20px;
+  color: #45362d;
+}
+
+.mainContainer input {
+  border: solid 0.5px #816c5d;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1px 8px;
+  margin-bottom: 3px;
+}
+
+.mainContainer select {
+  border: solid 0.5px #816c5d;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1px 8px;
+  margin-bottom: 3px;
+}
+
+.label {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+  z-index: -1; 
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  width: 60px;  
+  height: 34px; 
+  border: 1px solid #816c5d;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+.input:checked + .slider {
+  border:none;
+  background-color: #2196F3;
+}
+
+.input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.switchContainer {
+  display: flex;
+  flex-direction: column; 
+}
