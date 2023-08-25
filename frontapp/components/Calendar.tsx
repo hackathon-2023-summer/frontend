@@ -87,21 +87,27 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
       // レシピが存在しない場合、登録画面へ
       router.push(`/Upload?date=${date.format('YYYY-MM-DD')}`);
     } else {
-      // レシピが存在する場合、モーダル用に該当jsonをhookに保持
-      setCurrentImageIndex(0); // ここで初期値を設定
+      // レシピが存在する場合、詳細画面を表示する。
       setSelectedDetailData(clickedDateData);
+      setIsDetailsVisible(true);
+
+      //画像の有無でモーダルを表示する・しない
       const clickedImageData = clickedDateData.find(item => item.imageURL);
       if (clickedImageData) {
         setSelectedImage(clickedImageData.imageURL);
         setIsVisible(true);
-        setIsDetailsVisible(true);
       } else {
         setSelectedImage(undefined);
         setIsVisible(false);
-        setIsDetailsVisible(false);
       }
     }
   };
+
+  // レシピ詳細の表示
+  const handleClickDetail = () => {
+    const { id } = selectedDetailData[0]
+    router.push(`/Detail?id=${id}`);
+  }
 
   // モーダルを閉じる
   const handleModalClose = () => {
@@ -153,7 +159,6 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
     return null;  // リダイレクト後のレンダリングを回避するための早期return
   }
 
-
   return (
     <div className={calendarStyle.tableCentering}>
       <table className={calendarStyle.table}>
@@ -198,7 +203,7 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
 
       {/* 詳細表示部 */}
       {isDetailsVisible && (
-        <div className={calendarStyle.detailContainer}>
+        <div className={calendarStyle.detailContainer}>この日のレシピ
           {selectedDetailData.map(item => (
             <div key={item.id}>
               <div className={calendarStyle.recipeTitleBox}>
@@ -207,7 +212,7 @@ const Calender: React.FC<CalenderProps> = ({ year, month }) => {
               </div>
               <div className={calendarStyle.detailBtnBox}>
                 <p className={calendarStyle.category}>カテゴリ: {item.category}</p>
-                <button>詳細を表示</button>
+                <button onClick={handleClickDetail}>詳細を表示</button>
               </div>
               <div className={calendarStyle.overviewBox}>
                 {ReactHtmlParser(DOMPurify.sanitize(item.overview))}
