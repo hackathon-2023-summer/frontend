@@ -83,7 +83,7 @@ const Detail: React.FC = () => {
 
     // Uploadページのロードで実行。カテゴリを取得
     useEffect(() => {
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/categories/`;
+        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/fast/categories`;
         const token = getCookie('userToken');
         const headers = {
             'accept': 'application/json',
