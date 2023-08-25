@@ -8,6 +8,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Layout from "../components/postingLayout/Layout";
 import generalStyle from "../styles/generalStyle.module.css";
 import formStyles from '../styles/form.module.css';
+import { withAuthCheck } from '../components/AuthCheck'
 
 //アップロードするレシピのデータ型
 interface FormData {
@@ -71,10 +72,12 @@ const Upload: React.FC = () => {
           label: category
         }));
         setCategories(formattedCategories);
+
         if (formattedCategories.length > 0) {
           setFormData(prev => ({ ...prev, category: formattedCategories[0].value }));
         }
       })
+
       .catch(error => console.error('バックエンドから料理カテゴリの取得に失敗しました:', error));
   }, [formData.date]);
 
@@ -256,5 +259,7 @@ const Upload: React.FC = () => {
     </Layout>
   );
 }
+
+export const getServerSideProps = withAuthCheck();
 
 export default Upload;

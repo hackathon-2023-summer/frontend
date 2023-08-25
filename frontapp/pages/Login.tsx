@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className={LoginStyle.pagelayout}>
-      <h1 id={LoginStyle.title}>ANTOQUINO</h1>
+      <h1 id={LoginStyle.title}>Antoquino</h1>
       <input className={LoginStyle.inputform} type="text" placeholder="User name" value={username} onChange={(e) => setUsername(e.target.value)} />
       <input className={LoginStyle.inputform} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button className={LoginStyle.btn} onClick={handleLogin}>Login</button>

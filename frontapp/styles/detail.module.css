@@ -15,11 +15,24 @@
     color: white;
 }
 
-.photo_layout {
+.parentElementSelector {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .photo_layout {
     margin: auto;
     height: 16rem;
     width: auto;
     border: solid blanchedalmond;
+    overflow: hidden; 
+}
+
+.photo_layout img {
+    max-width: 100%; 
+    max-height: 100%; 
+    display: block; /* 追加: 画像をブロック要素として扱い、親要素の中央に配置 */
+    margin: auto; 
 }
 
 .recipe_summary{
